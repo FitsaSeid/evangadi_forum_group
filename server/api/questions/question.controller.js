@@ -15,21 +15,19 @@ module.exports = {
        const question = new Question ( {
            question : req.body.question,
            question_description : req.body.question_description,
-        //    userId : req.body.userId 
+           userId : req.body.userId
        
     }   
     )
 
-   
-
      // Save Post in the database
-        Question.create(question,(err, data) => {
+        Question.create(question,(err, callback) => {
 
             if (err) {
                 console.log(err)
-                return data(err);
+                return callback(err);
             }
-            return data(null, res);
+            return callback(null, res);
         })
         
         }catch(err){

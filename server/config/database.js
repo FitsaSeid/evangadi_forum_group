@@ -32,25 +32,25 @@ let questions = `CREATE TABLE IF NOT EXISTS questions(
     question_code_block varchar(255),
     tags varchar(255),
     post_id varchar(255),
-    user_id int,
+    user_id int NOT NULL,
     PRIMARY KEY (question_id),
-    UNIQUE KEY(post_id)
-    
+    UNIQUE KEY(post_id),
+    FOREIGN KEY (user_id) REFERENCES registration(user_id)
 )`;
-// FOREIGN KEY (user_id) REFERENCES registration(user_id)
+ 
 let answers = `CREATE TABLE IF NOT EXISTS answers(
     answer_id int auto_increment,
     answer varchar(255) NOT NULL,
     answer_code_block varchar(255),
    
-    PRIMARY KEY (answer_id)
-    
+    PRIMARY KEY (answer_id),
+    user_id int NOT NULL,
+    question_id int NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES registration(user_id),
+    FOREIGN KEY (question_id) REFERENCES question(question_id)
 
 )`;
-//  user_id int NOT NULL,
-//     question_id int NOT NULL,
-// FOREIGN KEY (user_id) REFERENCES registration(user_id),
-//     FOREIGN KEY (question_id) REFERENCES question(question_id)
+
 pool.query(registration, (err, results) => {
     if (err) throw err;
     console.log('registration table created');

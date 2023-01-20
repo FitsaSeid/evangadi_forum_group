@@ -4,22 +4,22 @@ const pool = require('../../config/database');
 const Question = function (question) {
     this.question = question.question;
     this.question_description = question.question_description;
-    // this.userId = question.userId;
+    this.userId = results[0].user_id;
 
 }
 
 
 // create
-Question.create = (newQuestion, data)=>{
-    const query =`INSERT INTO questions(question,question_description) VALUES (?,?);`
+Question.create = (newQuestion, callback)=>{
+    const query =`INSERT INTO questions(user_id,question,question_description) VALUES (?,?,?);`
     
-    pool.query(query, [newQuestion.question, newQuestion.question_description], (err, res) => {
+    pool.query(query, [newQuestion.userId,newQuestion.question, newQuestion.question_description], (err, res) => {
        
          if (err) {
              console.log(err)
-             return data(err);
+             return callback(err);
             }
-        return data(null, res);
+        return callback(null, res);
         }
      );
 }
