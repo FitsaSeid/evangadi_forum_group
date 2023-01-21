@@ -25,31 +25,50 @@ let profile = `CREATE TABLE if not exists profile(
     FOREIGN KEY (user_id) REFERENCES registration(user_id)
 )`;
 
-let questions = `CREATE TABLE IF NOT EXISTS questions(
-    question_id int auto_increment,
-    question varchar(255) NOT NULL,
-    question_description varchar(255),
-    question_code_block varchar(255),
-    tags varchar(255),
-    post_id varchar(255),
-    user_id int NOT NULL,
-    PRIMARY KEY (question_id),
-    UNIQUE KEY(post_id),
-    FOREIGN KEY (user_id) REFERENCES registration(user_id)
-)`;
- 
-let answers = `CREATE TABLE IF NOT EXISTS answers(
-    answer_id int auto_increment,
-    answer varchar(255) NOT NULL,
-    answer_code_block varchar(255),
-   
-    PRIMARY KEY (answer_id),
-    user_id int NOT NULL,
-    question_id int NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES registration(user_id),
-    FOREIGN KEY (question_id) REFERENCES question(question_id)
+let questions = `CREATE TABLE  IF NOT EXISTS questions(
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     question VARCHAR(255),
+     question_description varchar(255),
+     created_at TIMESTAMP DEFAULT NOW(),
+     user_id INT NOT NULL,
+     FOREIGN KEY(user_id) REFERENCES registration(user_id)
+ )`;
 
-)`;
+let answers = `CREATE TABLE IF NOT EXISTS answers(
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     answer varchar(255) NOT NULL,
+     created_at TIMESTAMP DEFAULT NOW(),
+     question_id INT NOT NULL,
+     FOREIGN KEY(question_id) REFERENCES questions(id),
+     user_id INT NOT NULL,
+     FOREIGN KEY(user_id) REFERENCES registration(user_id)
+ )`;
+
+let comments = `CREATE TABLE IF NOT EXISTS comments(
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     comment varchar(255) NOT NULL,
+     created_at TIMESTAMP DEFAULT NOW(),
+     question_id INT NOT NULL,
+     FOREIGN KEY(question_id) REFERENCES questions(id),
+     user_id INT NOT NULL,
+     FOREIGN KEY(user_id) REFERENCES registration(user_id)
+ )`;
+
+let tags =`CREATE TABLE IF NOT EXISTS tags(
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     tagname VARCHAR(255) UNIQUE,
+     created_at TIMESTAMP DEFAULT NOW()
+ )`;
+
+let posttag = 
+`CREATE TABLE IF NOT EXISTS posttag(
+     question_id INT NOT NULL,
+     FOREIGN KEY(question_id) REFERENCES questions(id),
+     tag_id INT NOT NULL,
+     FOREIGN KEY(tag_id) REFERENCES tags(id),
+     created_at TIMESTAMP DEFAULT NOW(),
+     PRIMARY KEY(question_id, tag_id)
+ )`;
 
 pool.query(registration, (err, results) => {
     if (err) throw err;
@@ -69,6 +88,21 @@ pool.query(questions, (err, results) => {
 pool.query(answers, (err, results) => {
     if (err) throw err;
     console.log('answers table created');
+})
+
+pool.query(comments, (err, results) => {
+    if (err) throw err;
+    console.log('comments table created');
+})
+
+pool.query(tags, (err, results) => {
+    if (err) throw err;
+    console.log('tags table created');
+})
+
+pool.query(posttag, (err, results) => {
+    if (err) throw err;
+    console.log('posttag table created');
 })
 
 module.exports = pool;
