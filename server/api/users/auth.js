@@ -1,15 +1,11 @@
+
 const responseHandler = require('../helpers/helperFunction')
-const User = require('../users/user.service');
 const { validationResult } = require('express-validator');
+const User = require('./user.service');
 
-const getUsers = (req, res) => {
+const loadUser = (req, res) => {
     try {
-        const { id } = req.params;
-
-        User.retrieve({
-            'action': id ? 'one' : 'all',
-            'id': id ? id : null
-        }, (err, data) => {
+        User.loadUser(req.user.user_id, (err, data) => {
             if (err) {
                 console.log(err);
                 return res.status(err.code).json(err);
@@ -24,7 +20,7 @@ const getUsers = (req, res) => {
     }
 };
 
-const register = async (req, res) => {
+const login = (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res
@@ -32,8 +28,8 @@ const register = async (req, res) => {
             .json(responseHandler(false, 400, errors.array()[0].msg, null));
     }
     try {
-        // Register user in the database
-        await User.register(new User(req.body), (err, data) => {
+        // Login the user
+        User.login(new User(req.body), (err, data) => {
             if (err) {
                 console.log(err);
                 return res.status(err.code).json(err);
@@ -48,7 +44,7 @@ const register = async (req, res) => {
     }
 };
 
-module.exports =  {
-    getUsers,
-    register
+module.exports = authController = {
+    loadUser,
+    login
 };

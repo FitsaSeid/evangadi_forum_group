@@ -1,59 +1,174 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 const pool = require('../../config/database');
+const responseHandler = require('../helpers/helperFunction')
+require("dotenv").config();
 
-module.exports = {
-    //data comes form the user controller
-    register: (data, callback) => {
+// constructor
+const User = function (user) {
+    this.username = user.username;
+    this.password = user.password;
+    this.firstname = user.firstname;
+    this.lastname = user.lastname;
+    this.email = user.email;
+};
 
-        //inserting data to registration table
-        pool.query(`INSERT INTO registration(user_name,user_email,user_password)VALUES(?,?,?)`,
-            [
-                data.userName,
-                data.email,
-                data.password
-            ],
-            (err, result) => {
-                if (err) {
-                    return callback(err);
-                }
-                return callback(null, result);
-            }
-        );
-    },
-    profile: (data, callback) => {
+User.register = async (newUser, result) => {
+    const salt = await bcrypt.genSalt(10);
+    newUser.password = await bcrypt.hash(newUser.password, salt);
 
-        //inserting data to profile table
-        pool.query(`INSERT INTO profile(user_id,first_name,last_name)VALUES(?,?,?)`,
-            [
-                data.userId,
-                data.firstName,
-                data.lastName
-            ],
-            (err, result) => {
-                if (err) {
-                    return callback(err);
-                }
-                return callback(null, result);
-            }
-        );
-    },
-    userById: (id, callback) => {
+    const query = `INSERT INTO registration(user_name,user_email,user_password,first_name,last_name) VALUES(?,?,?,?,?);`;
 
-        //getting data from registration and profile tables by joining them
-        pool.query(`SELECT registration.user_id,user_name,user_email,first_name,last_name FROM registration LEFT JOIN profile ON registration.user_id = profile.user_id WHERE registration.user_id = ?`, [id], (err, result) => {
+    pool.query(query,
+        [newUser.username, newUser.email, newUser.password, newUser.firstname, newUser.lastname],
+        (err, res) => {
             if (err) {
-                return callback(err);
+                console.log('error: ', err);
+                result(
+                    responseHandler(false, err.statusCode, err.message, null),
+                    null
+                );
+                return;
             }
-            return callback(null, result[0]);
-        })
-    },
-    getUserByEmail: (email, callback) => {
 
-        //getting the user-info by using email
-        pool.query(`SELECT * FROM registration WHERE user_email = ?`, [email], (err, result) => {
-            if (err) {
-                return callback(err);
+            const payload = {
+                user: {
+                    id: res.insertId
+                }
+            };
+
+            jwt.sign(
+                payload,
+                config.get('jwtSecret'),
+                { expiresIn: 3600 },
+                (err, token) => {
+                    if (err) {
+                        console.log('error: ', err);
+                        result(
+                            responseHandler(false, err.statusCode, err.message, null),
+                            null
+                        );
+                        return;
+                    }
+                    result(
+                        null,
+                        responseHandler(true, 200, 'User registered', { 'token': token })
+                    );
+                });
+        });
+};
+
+User.login = (newUser, result) => {
+    const query = `SELECT * FROM registration WHERE user_email = ?;`;
+
+    pool.query(query,
+        newUser.email,
+        async (err, results) => {
+            if (err || !results[0]) {
+                console.log('error: ', err);
+                const code = !results[0] ? 404 : err.statusCode;
+                result(
+                    responseHandler(false, code, !results[0] ? 'User does not exists' : err.message, null),
+                    null
+                );
+                return;
             }
-            return callback(null, result[0]);
-        })
-    }
+
+            const user = results[0];
+
+            const isMatch = await bcrypt.compare(newUser.password, user.password);
+
+            if (!isMatch) {
+                result(
+                    responseHandler(false, 400, 'Incorrect password', null),
+                    null
+                );
+            }
+
+            const payload = {
+                user: {
+                    id: user.user_id
+                }
+            };
+
+            jwt.sign(
+                payload,
+                config.get('jwtSecret'),
+                { expiresIn: 3600 },
+                (err, token) => {
+                    if (err) {
+                        console.log('error: ', err);
+                        result(
+                            responseHandler(false, err.statusCode, err.message, null),
+                            null
+                        );
+                        return;
+                    }
+                    result(
+                        null,
+                        responseHandler(true, 200, 'User logged in', { 'token': token })
+                    );
+                });
+        });
+};
+
+User.retrieve = ({ action, id }, result) => {
+    action = action.toLowerCase();
+    const head = `  SELECT registration.user_id,registration.user_name, COUNT(DISTINCT questions.id)`;
+    const middle = `FROM registration 
+                    LEFT JOIN questions ON questions.user_id = registration.user_id 
+                    LEFT JOIN posttag ON posttag.question_id = questions.id 
+                    LEFT JOIN tags ON posttag.tag_id = tags.id`;
+
+    const q1 = `as questions_count,COUNT(DISTINCT tagname) as tags_count  
+                 ${middle} GROUP BY registration.user_id ORDER BY questions_count DESC;`;
+
+    const q2 = `as question_count,COUNT(DISTINCT tagname) 
+                as tag_count, COUNT(DISTINCT answers.id) 
+                as answer_count, COUNT(DISTINCT comments.id) 
+                as comment_count 
+                 ${middle} LEFT JOIN answers ON answers.user_id = registration.user_id 
+                LEFT JOIN comments ON comments.user_id = registration.user_id
+                WHERE registration.user_id = ? GROUP BY registration.user_id;`
+
+    pool.query(action === 'one' ? head + q2 : head + q1,
+        action === 'one' ? id : null,
+        (err, results) => {
+            if (err || results.length === 0) {
+                console.log('error: ', err);
+                result(
+                    responseHandler(false, err ? err.statusCode : 404, err ? err.message : 'There are no users', null),
+                    null
+                );
+                return;
+            }
+            result(
+                null,
+                responseHandler(true, 200, 'Success', action === 'one' ? results[0] : results)
+            );
+        });
 }
+
+User.loadUser = (user_id, result) => {
+    const query = `SELECT user_id,user_name,user_email FROM registration WHERE user_id = ?;`;
+
+    pool.query(query,
+        user_id,
+        (err, results) => {
+            if (err) {
+                console.log('error: ', err);
+                result(
+                    responseHandler(false, err.statusCode, err.message, null),
+                    null
+                );
+                return;
+            }
+            result(
+                null,
+                responseHandler(true, 200, 'Success', results[0])
+            );
+        });
+}
+
+module.exports = User;

@@ -1,26 +1,34 @@
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const jwt = require('jsonwebtoken');
+const config = require('config');
+const responseHandler = require('../helpers/helperFunction')
 
-const auth = (req, res, next) => {
+
+module.exports = (req, res, next) => {
+    const token = req.header('x-auth-token');
+
+    // Check if no token
+    if (!token) {
+        return res
+            .status(401)
+            .json(responseHandler(false, 401, 'Sign-in required', null));
+    }
+
+    // Verify token
     try {
-        const token = req.header("x-auth-token");
-        if (!token)
-            return res
-                .status(401)
-                .json({ msg: "No authentication token, authorization denied." });
-
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
-        // console.log(verified);
-        if (!verified)
-            return res
-                .status(401)
-                .json({ msg: "Token verification failed, authorization denied." });
-
-        req.id = verified.id;
-        next();
+        jwt.verify(token, config.get('jwtSecret'), (error, decoded) => {
+            if (error) {
+                return res
+                    .status(400)
+                    .json(responseHandler(false, 400, 'Try again', null));
+            } else {
+                req.user = decoded.user;
+                next();
+            }
+        });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error('error: ' + err);
+        return res
+            .status(500)
+            .json(responseHandler(false, 500, 'Server Error', null));
     }
 };
-
-module.exports = auth;

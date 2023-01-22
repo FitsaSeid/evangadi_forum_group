@@ -1,18 +1,21 @@
-const router = require('express').Router();
+const express = require('express');
+const router = express.Router();
+const { check } = require('express-validator');
+const checkExistence = require('../middleware/checkExistence');
+const {getUsers,register} = require('./user.controller');
 
-//importing auth middleware
-const auth = require('../middleware/auth');
 
 
-const { createUser, getUserById, login } = require('./user.controller');
-
-//route new user to be registered using createUser controller
-router.post("/", createUser);
-
-//route existing user to be verified using auth middleware and getUserById
-router.get("/", auth, getUserById);
-
-//route existing user to be login using login controller
-router.post("/login", login);
+router.get('/', getUsers);
+router.get('/:id', getUsers);
+router.post('/',
+    [
+        check('username', 'user name must be 5 or more charachter').isLength({ min: 5 }),
+        check('email', 'Please include a valid email').isEmail(),
+        check(
+            'password',
+            'Please enter a password with 8 or more characters'
+        ).isLength({ min: 8 }), checkExistence
+    ], register);
 
 module.exports = router;
