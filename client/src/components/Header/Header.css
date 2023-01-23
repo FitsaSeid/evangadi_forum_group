@@ -1,0 +1,42 @@
+nav {
+    background-color: #111;
+    box-shadow: #111;
+    box-shadow: 1px 1px 10px 1px #888888;
+}
+
+.container-fluid {
+    width: 70%;
+    padding: 15px;
+    position: relative;
+}
+
+.navbar-toggler {
+    position: absolute;
+    right: 20px;
+}
+
+/* .navbar-brand {
+    margin-left: 50%;
+} */
+
+
+.header-menu {
+    position: absolute;
+    right: 10%;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.header-signup {
+    padding: 10px 20px;
+    width: 200px;
+    background-color: #516cf0;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: 700;
+}
+
+.navbar-collapse>ul>li {
+    margin: 5px;
+}

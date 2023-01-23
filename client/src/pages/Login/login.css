@@ -1,0 +1,108 @@
+.login {
+    background: url(./evangadi-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-bottom: 150px;
+
+}
+
+.login-container {
+    width: 60%;
+    margin: 0 auto;
+    padding-top: 5%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.col-md-6 {
+    /* border: 5px solid #111; */
+    margin: px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    vertical-align: middle;
+}
+
+.login-form {
+    background-color: #fff;
+    box-shadow: 1px 1px 5px 1px #d5d5d5;
+    border-radius: 10px;
+}
+
+.login-form form {
+    margin: 20px;
+}
+
+.login-form input {
+    width: 100%;
+    margin-bottom: 20px;
+    height: 50px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(39, 38, 38, 0.3);
+}
+
+
+.login-button {
+    padding: 10px 20px;
+    width: 100%;
+    background-color: #516cf0;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: 700;
+}
+
+.login-title {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.login-title h3 {
+    text-align: center;
+    font-size: 24px;
+}
+
+.login-title a {
+    color: orangered;
+}
+
+.forgot-password,
+a {
+    text-align: right;
+    color: orangered;
+    margin-bottom: 30px;
+}
+
+.evangadi-title {
+    font-size: 45px;
+    margin: 20px;
+    color: #4b456f;
+}
+
+.evangadi-desc {
+    font-size: 15px;
+    color: #656565;
+    margin: 20px;
+}
+
+.evangadi-about {
+    color: orangered;
+    margin: 40px 20px 0 20px;
+}
+
+.info-button {
+    padding: 10px 20px;
+    width: 30%;
+    background-color: #fe8402;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    margin: 20px;
+}
+
+/* .remover {
+    display: none;
+} */

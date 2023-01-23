@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Link, redirect } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
+import './login.css'
+
 
 import { login } from '../../redux/auth/auth.actions';
 import PropTypes from 'prop-types';
@@ -12,6 +14,7 @@ const Login = ({ login, isAuthenticated }) => {
     
   });
 
+  const navigate = useNavigate()
   const { email, password } = formData;
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,60 +25,57 @@ const Login = ({ login, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    return <redirect to='/' />;
+    return navigate('/');
   }
 
   return (
-    <div className='auth-page'>
-      <div className='register-content'>
-        <div className='register-grid'>
-          <div>
-            <div className='icon-holder'>
-             
+    <div className='login' id='login'>
+      <div className="login-container">
+
+        <div className="row">
+          <div className="col-md-6 login-form remover" id='signin'>
+
+            <div className="login-title">
+              <h3>Login to your account</h3>
+              <p>Don’t have an account? 
+              <Link to='/register'>Create a new account</Link></p>
             </div>
-            <div className='form-container'>
-              <form className='login-form' onSubmit={e => onSubmit(e)}>
-                <div>
-                  <label className='form-label s-label fc-black-600'>Email</label>
-                  <input
-                    className='form-input s-input'
+
+            <form onSubmit={e => onSubmit(e)}>
+              <input
                     type='text'
                     name='email'
                     value={email}
+                    placeholder='Email'
                     onChange={e => onChange(e)}
                     id='email'
-
                   />
-                </div>
-                <div>
-                  <label className='form-label s-label fc-black-600'>Password</label>
-                  <input
-                    className='form-input s-input'
+              <input
                     type='password'
                     name='password'
                     value={password}
+                    placeholder='Password'
                     onChange={e => onChange(e)}
                     id='password'
 
                   />
-                </div>
-                <div className='grid gs4 gsy fd-column js-auth-item '>
-                  <button className='s-btn s-btn__primary' id='submit-button' name='submit-button'>Log in</button>
-                </div>
-              </form>
-              <div className='fs-caption license fc-black-500'>
-                By clicking “Log In”, you agree to our <Link to='https://stackoverflow.com/legal/terms-of-service/public' className='-link'>
-                  terms of service</Link>, <Link to='https://stackoverflow.com/legal/privacy-policy' name='privacy' className='-link'>
-                  privacy policy</Link> and <Link to='https://stackoverflow.com/legal/cookie-policy' className='-link'>cookie policy</Link>
-                <input type='hidden' name='legalLinksShown' value='1' />
-              </div>
-            </div>
-            <div className='redirects fc-black-500'>
-              Don't have an account? <Link to='/register' name='login'>Sign up</Link>
-              <div>
-                Are you an employer? <Link to='https://careers.stackoverflow.com/employer/login' name='talent'>Sign up on Talent <svg aria-hidden='true' className='svg-icon va-text-bottom sm-d-none icon-share-sm' width='14' height='14' viewBox='0 0 14 14'><path d='M5 1H3a2 2 0 0 0-2 2v8c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V9h-2v2H3V3h2V1z' /><path d='M7 1h6v6h-2V4.5L6.5 9 5 7.5 9.5 3H7V1z' /></svg></Link>
-              </div>
-            </div>
+              <br />
+              <p className='forgot-password'><Link to="/register">Forgot password?</Link></p>
+
+              <button className='login-button'>Login</button>
+            </form>
+
+          </div>
+         
+          <div className="col-md-6">
+            <p className='evangadi-about'>About</p>
+            <h2 className='evangadi-title'>Evangadi Networks</h2>
+            <p className='evangadi-desc'>
+              No matter what stage of life you are in, whether you’re just starting elementary school or being promoted to CEO of a Fortune 500 company, you have much to offer to those who are trying to follow in your footsteps.
+
+              Wheather you are willing to share your knowledge or you are just looking to meet mentors of your own, please start by joining the network here.
+            </p>
+            <button className='info-button'>HOW IT WORKS</button>
           </div>
         </div>
       </div>

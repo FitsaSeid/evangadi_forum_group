@@ -7,6 +7,8 @@ import Login from './pages/Login/Login';
 import { loadUser } from "./redux/auth/auth.actions";
 import setAuthToken from "./redux/auth/auth.utils";
 import { useEffect } from 'react';
+import Register from './pages/Register/Register';
+import Header from './components/Header/Header';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -20,9 +22,11 @@ const App = () => {
   return (
     <Provider store={store}>
       <div>
+      <Header />
         <Routes>
 
           <Route exact path='/login' element={<Login />} />
+          <Route exact path='/register' element={<Register />} />
 
         </Routes>
 
