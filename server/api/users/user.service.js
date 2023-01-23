@@ -77,7 +77,7 @@ User.login = (newUser, result) => {
 
             const user = results[0];
 
-            const isMatch = await bcrypt.compare(newUser.password, user.password);
+            const isMatch = await bcrypt.compare(newUser.password, user.user_password);
 
             if (!isMatch) {
                 result(
