@@ -11,6 +11,7 @@ import setAuthToken from "./redux/auth/auth.utils";
 import { loadUser } from "./redux/auth/auth.actions";
 import store from './redux/store';
 import { Provider } from 'react-redux';
+import QuestionForm from './pages/questionForm/QuestionForm';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -23,6 +24,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
+    
       <div>
       <Header />
       <Alert />
@@ -30,7 +32,7 @@ const App = () => {
           <Route exact path='/' element={<Home />} />
           <Route exact path='/login' element={<Login />} />
           <Route exact path='/register' element={<Register />} />
-          {/* <Route exact path='/questions' element={<Question />} /> */}
+          <Route exact path='/questions' element={<QuestionForm />} />
           {/* <Route exact path='/questions/:id' element={<Question />} />
           <Route exact path='/add/question' element={<QuestionForm />} /> */}
           

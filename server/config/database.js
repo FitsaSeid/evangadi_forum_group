@@ -10,12 +10,12 @@ const pool = mysql.createPool({
     connectionLimit: 10
 });
 
-let registration = `CREATE TABLE if not exists registration(
-    user_id int auto_increment,
+let users = `CREATE TABLE if not exists users(
+    id int auto_increment,
     user_name varchar(255) not null,
     user_email varchar(255) not null,
     user_password varchar(255) not null,
-    PRIMARY KEY (user_id),
+    PRIMARY KEY (id),
     UNIQUE KEY (user_name),
     first_name varchar(255) not null,
     last_name varchar(255) not null   
@@ -27,7 +27,7 @@ let questions = `CREATE TABLE  IF NOT EXISTS questions(
      question_description varchar(255),
      created_at TIMESTAMP DEFAULT NOW(),
      user_id INT NOT NULL,
-     FOREIGN KEY(user_id) REFERENCES registration(user_id)
+     FOREIGN KEY(user_id) REFERENCES users(id)
  )`;
 
 let answers = `CREATE TABLE IF NOT EXISTS answers(
@@ -37,7 +37,7 @@ let answers = `CREATE TABLE IF NOT EXISTS answers(
      question_id INT NOT NULL,
      FOREIGN KEY(question_id) REFERENCES questions(id),
      user_id INT NOT NULL,
-     FOREIGN KEY(user_id) REFERENCES registration(user_id)
+     FOREIGN KEY(user_id) REFERENCES users(id)
  )`;
 
 let comments = `CREATE TABLE IF NOT EXISTS comments(
@@ -47,7 +47,7 @@ let comments = `CREATE TABLE IF NOT EXISTS comments(
      question_id INT NOT NULL,
      FOREIGN KEY(question_id) REFERENCES questions(id),
      user_id INT NOT NULL,
-     FOREIGN KEY(user_id) REFERENCES registration(user_id)
+     FOREIGN KEY(user_id) REFERENCES users(id)
  )`;
 
 let tags =`CREATE TABLE IF NOT EXISTS tags(
@@ -66,9 +66,9 @@ let posttag =
      PRIMARY KEY(question_id, tag_id)
  )`;
 
-pool.query(registration, (err, results) => {
+pool.query(users, (err, results) => {
     if (err) throw err;
-    console.log('registration table created');
+    console.log('users table created');
 })
 
 pool.query(questions, (err, results) => {

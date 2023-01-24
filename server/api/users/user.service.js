@@ -18,7 +18,7 @@ User.register = async (newUser, result) => {
     const salt = await bcrypt.genSalt(10);
     newUser.password = await bcrypt.hash(newUser.password, salt);
 
-    const query = `INSERT INTO registration(user_name,user_email,user_password,first_name,last_name) VALUES(?,?,?,?,?);`;
+    const query = `INSERT INTO users(user_name,user_email,user_password,first_name,last_name) VALUES(?,?,?,?,?);`;
 
     pool.query(query,
         [newUser.username, newUser.email, newUser.password, newUser.firstname, newUser.lastname],
@@ -60,7 +60,7 @@ User.register = async (newUser, result) => {
 };
 
 User.login = (newUser, result) => {
-    const query = `SELECT * FROM registration WHERE user_email = ?;`;
+    const query = `SELECT * FROM users WHERE user_email = ?;`;
 
     pool.query(query,
         newUser.email,
@@ -88,7 +88,7 @@ User.login = (newUser, result) => {
 
             const payload = {
                 user: {
-                    id: user.user_id
+                    id: user.id
                 }
             };
 
@@ -115,22 +115,22 @@ User.login = (newUser, result) => {
 
 User.retrieve = ({ action, id }, result) => {
     action = action.toLowerCase();
-    const head = `  SELECT registration.user_id,registration.user_name, COUNT(DISTINCT questions.id)`;
-    const middle = `FROM registration 
-                    LEFT JOIN questions ON questions.user_id = registration.user_id 
+    const head = `  SELECT users.id,users.user_name, COUNT(DISTINCT questions.id)`;
+    const middle = `FROM users 
+                    LEFT JOIN questions ON questions.user_id = users.id 
                     LEFT JOIN posttag ON posttag.question_id = questions.id 
                     LEFT JOIN tags ON posttag.tag_id = tags.id`;
 
     const q1 = `as questions_count,COUNT(DISTINCT tagname) as tags_count  
-                 ${middle} GROUP BY registration.user_id ORDER BY questions_count DESC;`;
+                 ${middle} GROUP BY users.id ORDER BY questions_count DESC;`;
 
     const q2 = `as question_count,COUNT(DISTINCT tagname) 
                 as tag_count, COUNT(DISTINCT answers.id) 
                 as answer_count, COUNT(DISTINCT comments.id) 
                 as comment_count 
-                 ${middle} LEFT JOIN answers ON answers.user_id = registration.user_id 
-                LEFT JOIN comments ON comments.user_id = registration.user_id
-                WHERE registration.user_id = ? GROUP BY registration.user_id;`
+                 ${middle} LEFT JOIN answers ON answers.user_id = users.id 
+                LEFT JOIN comments ON comments.user_id = users.id
+                WHERE users.id = ? GROUP BY users.id;`
 
     pool.query(action === 'one' ? head + q2 : head + q1,
         action === 'one' ? id : null,
@@ -151,7 +151,7 @@ User.retrieve = ({ action, id }, result) => {
 }
 
 User.loadUser = (user_id, result) => {
-    const query = `SELECT user_id,user_name,user_email FROM registration WHERE user_id = ?;`;
+    const query = `SELECT id,user_name FROM users WHERE id = ?;`;
 
     pool.query(query,
         user_id,

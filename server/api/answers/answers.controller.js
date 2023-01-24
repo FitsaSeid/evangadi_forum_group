@@ -31,7 +31,7 @@ const addAnswer = (req, res) => {
     try {
         const answer = new Answer({
             answer: req.body.text,
-            user_id: req.user.user_id,
+            user_id: req.user.id,
             question_id: req.params.id
         });
         // Save Answer in the database

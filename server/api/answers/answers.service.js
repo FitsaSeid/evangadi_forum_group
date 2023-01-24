@@ -62,7 +62,7 @@ Answer.retrieveAll = (questionId, result) => {
                     answers.id, question_id, answers.user_id, user_name, answers.answer, answers.created_at 
                     FROM answers 
                     JOIN questions ON questions.id = question_id 
-                    JOIN registration ON registration.user_id = answers.user_id 
+                    JOIN users ON users.id = answers.user_id 
                     WHERE question_id = ?;`;
 
     pool.query(query,

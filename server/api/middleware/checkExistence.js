@@ -5,7 +5,7 @@ const responseHandler = require('../helpers/helperFunction')
 module.exports = (req, res, next) => {
     const { email } = req.body;
 
-    pool.query(`SELECT * FROM registration WHERE user_email = ?;`, email, (err, results) => {
+    pool.query(`SELECT * FROM users WHERE user_email = ?;`, email, (err, results) => {
         if (err) {
             return res
                 .status(err.statusCode)

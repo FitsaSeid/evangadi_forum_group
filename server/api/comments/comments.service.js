@@ -56,7 +56,7 @@ Comment.retrieveAll = (questionId, result) => {
                     comments.id, question_id, comments.user_id, user_name, comments.comment, comments.created_at 
                     FROM comments 
                     JOIN questions ON questions.id = comments.question_id 
-                    JOIN registration ON registration.user_id = comments.user_id 
+                    JOIN users ON users.id = comments.user_id 
                     WHERE question_id = ?;`;
 
     pool.query(query,

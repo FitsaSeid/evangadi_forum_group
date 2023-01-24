@@ -13,7 +13,7 @@ const Question = function (question) {
 
 // create
 Question.create = (newQuestion, result)=>{
-    const query = `INSERT INTO questions(question,question_description,user_id) VALUES (?,?,?)
+    const query = `INSERT INTO questions(question,question_description,users) VALUES (?,?,?)
    `; 
     
     pool.query(query, [newQuestion.question, newQuestion.question_description, newQuestion.userId], (err, res) => {
@@ -52,7 +52,7 @@ Question.retrieveOne = (questionId, result) => {
                     FROM questions 
                     JOIN posttag ON questions.id = question_id 
                     JOIN tags ON tag_id = tags.id 
-                    JOIN registration ON user_id = registration.user_id 
+                    JOIN users ON user_id = users.id 
                     LEFT JOIN answers ON answers.question_id = questions.id 
                     LEFT JOIN comments ON questions.id = comments.question_id 
                     WHERE questions.id = ?;`;
@@ -85,7 +85,7 @@ Question.retrieveAll = ({ action, tagName }, result) => {
                 JOIN posttag ON questions.id = question_id 
                 JOIN tags ON tag_id = tags.id 
                 
-                JOIN registration ON user_id = registration.user_id 
+                JOIN users ON user_id = users.id 
                 LEFT JOIN answers ON answers.question_id = questions.id 
                 LEFT JOIN comments ON questions.id = comments.question_id `;
 
@@ -108,14 +108,14 @@ Question.retrieveAll = ({ action, tagName }, result) => {
             if (err || results.length === 0) {
                 console.log('error: ', err);
                 result(
-                    helperFunction.responseHandler(false, err ? err.statusCode : 404, err ? err.message : 'There are no posts', null),
+                    responseHandler(false, err ? err.statusCode : 404, err ? err.message : 'There are no posts', null),
                     null
                 );
                 return;
             }
             result(
                 null,
-                helperFunction.responseHandler(true, 200, 'Success', results)
+                responseHandler(true, 200, 'Success', results)
             );
         });
 }

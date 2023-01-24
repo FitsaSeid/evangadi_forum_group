@@ -35,8 +35,15 @@ nav {
     border: none;
     border-radius: 5px;
     font-weight: 700;
+    margin-left: 30px;
 }
 
 .navbar-collapse>ul>li {
     margin: 5px;
+}
+
+.s-btn__filled{
+    border-radius: 20%;
+    background-color: lawngreen;
+    margin-left: 20px;
 }
