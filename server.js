@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/api/users", userRouter);
 app.use('/api/questions', QuestionRouter)
-app.use('/api/answers', AnswerRouter)
+app.use('/api/questions/answers', AnswerRouter)
 app.use('/api/auth', AuthRouter)
 app.use('/api/comments', CommentRouter)
 
