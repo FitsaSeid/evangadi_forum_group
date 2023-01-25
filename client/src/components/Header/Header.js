@@ -7,7 +7,7 @@ import { logout } from '../../redux/auth/auth.actions'
 // import evangadi from './evangadi-logo.png'
 
 
-const Header = ({ auth: { isAuthenticated, loading }, logout}) => {
+const Header = ({ auth: { isAuthenticated, loading }, logout }) => {
 
     const authLinks = (
         <div className='btns'>
@@ -16,37 +16,37 @@ const Header = ({ auth: { isAuthenticated, loading }, logout}) => {
             </Link>
         </div>
     );
-    const authTabs = (
-        <div className="s-navigation">
-            <Link to='/' className="s-navigation--item is-selected">Home</Link>
-        </div>
-    );
+    // const authTabs = (
+    //     <div className="s-navigation">
+    //         <Link to='/' className="s-navigation--item is-selected">Home</Link>
+    //     </div>
+    // );
 
     const guestLinks = (
         <div className='btns'>
             <Link to='#' class="nav-item" href="#">How it works</Link>
-            
+
             <Link to='/register'>
-                <button type='button' className='header-signup'>Sign up</button>
+                <button type='button' className='header-signup'>{"Sign up"}</button>
             </Link>
         </div>
     );
 
     const guestTabs = (
         <div className="s-navigation">
-           
+
         </div>
     );
-    
+
     return (
         <header>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
                     <div>
-                        <a class="navbar-brand" ><img src='https://www.evangadi.com/themes/humans//assets/images/misc/evangadi-logo-home.png' alt="" /></a>
-                        {!loading && (
+                        <a href='/' class="navbar-brand" ><img src='https://www.evangadi.com/themes/humans//assets/images/misc/evangadi-logo-home.png' alt="" /></a>
+                        {/* {!loading && (
                             <Fragment>{isAuthenticated ? authTabs : guestTabs}</Fragment>
-                        )}
+                        )} */}
                         <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
@@ -70,8 +70,8 @@ const Header = ({ auth: { isAuthenticated, loading }, logout}) => {
 
                         </ul>
                         {!loading && (
-                <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
-            )}
+                            <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+                        )}
 
                     </div>
                 </div>

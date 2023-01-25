@@ -1,4 +1,4 @@
-import React, {useEffect,Fragment} from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getQuestions } from '../../redux/questions/questions.action';
@@ -11,10 +11,10 @@ import PostItem from '../../components/PostItem/PostItem.component';
 import './QuestionsPage.styles.scss'
 
 
-const QuestionsPage = ({ getQuestions, question: { questions, loading }  }) => {
+const QuestionsPage = ({ getQuestions, question: { questions, loading } }) => {
     useEffect(() => {
         getQuestions();
-    }, [getQuestions ]);
+    }, [getQuestions]);
 
     return loading || questions === null ? <Fragment>Loading...</Fragment> : <Fragment>
         <div className='page'>
@@ -25,7 +25,7 @@ const QuestionsPage = ({ getQuestions, question: { questions, loading }  }) => {
                         <h3 className='questions-headline'>All Questions</h3>
                         <div className='questions-btn'>
                             <Link to='/add/question'>
-                                <button className = 's-btn s-btn__primary'>Ask Question</button>
+                                <button className='s-btn s-btn__primary'>Ask Question</button>
                             </Link>
                         </div>
                     </div>
@@ -40,7 +40,7 @@ const QuestionsPage = ({ getQuestions, question: { questions, loading }  }) => {
                 {/* <RightSideBar/> */}
             </div>
         </div>
-        </Fragment>
+    </Fragment>
 };
 
 

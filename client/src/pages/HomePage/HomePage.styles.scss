@@ -7,7 +7,7 @@
   margin: 14px auto 0 auto;
 }
 
-body{
+body {
   background-color: white;
 }
 
@@ -72,3 +72,20 @@ body{
 //     margin: 0;
 //   }
 // }
+
+
+.button {
+  padding: 10px 0;
+  width: 200px;
+  background-color: #516cf0;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-weight: 700;
+  margin-right: 50px;
+}
+
+.questions-grid {
+  display: flex;
+  justify-content: space-between;
+}

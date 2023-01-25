@@ -17,6 +17,7 @@ import PostForm from './pages/PostForm/PostForm';
 // import Home from './pages/Home/Home';
 import Alert from './components/alert/alert';
 import setAuthToken from "./redux/auth/auth.utils";
+import Answer from './components/Answer/Answer';
 
 // import QuestionForm from './pages/questionForm/QuestionForm';
 
@@ -32,10 +33,10 @@ const App = () => {
 
   return (
     <Provider store={store}>
-    
+
       <div>
-      <Header />
-      <Alert />
+        <Header />
+        <Alert />
         <Routes>
           {/* <Route exact path='/' element={<Home />} /> */}
 
@@ -46,12 +47,15 @@ const App = () => {
           <Route exact path='/questions' element={<QuestionsPage />} />
           <Route exact path='/add/question' element={<PostForm />} />
 
+          <Route exact path='/t' element={<Answer />} />
+
+
 
 
           {/* <Route exact path='/questions' element={<QuestionForm />} /> */}
           {/* <Route exact path='/questions/:id' element={<Question />} />
           <Route exact path='/add/question' element={<QuestionForm />} /> */}
-          
+
 
         </Routes>
 

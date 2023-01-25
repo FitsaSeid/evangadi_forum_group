@@ -48,12 +48,7 @@ const PostForm = ({ auth: { isAuthenticated, loading }, addQuestion }) => {
                             <div className='question-form p16 s-card'>
                                 <div className='question-layout'>
                                     <div className='title-grid'>
-                                        <label className='form-label s-label'>
-                                            Question
-                                            <p className='title-desc fs-caption fc-black-700'>
-                                                Ask your question here
-                                            </p>
-                                        </label>
+
                                         <input
                                             className='title-input s-input'
                                             type='text'
@@ -65,11 +60,7 @@ const PostForm = ({ auth: { isAuthenticated, loading }, addQuestion }) => {
                                         />
                                     </div>
                                     <div className='body-grid '>
-                                        <label className='form-label s-label fc-black-700'>
-                                            Description
-                                            <p className='body-desc fw-normal fs-caption fc-black-800'>Include all the information someone would
-                                                need to answer your question</p>
-                                        </label>
+
                                         <textarea
                                             className='s-textarea'
                                             name='question_description'

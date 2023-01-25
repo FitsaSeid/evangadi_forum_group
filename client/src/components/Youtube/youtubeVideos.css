@@ -1,0 +1,30 @@
+.youtube img {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+h4 {
+    padding: 0 !important;
+    font-size: 16px;
+}
+
+.youtube__body {
+    width: 300px;
+}
+
+.youtube__body p {
+    font-size: 11px;
+}
+
+.question-and-date {
+    display: flex;
+    justify-content: space-between;
+}
+
+.created-at {}

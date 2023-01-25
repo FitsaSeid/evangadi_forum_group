@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -11,10 +11,10 @@ import PostItem from '../../components/PostItem/PostItem.component';
 import './HomePage.styles.scss';
 import YoutubeVideos from '../../components/Youtube/Youtube';
 
-const HomePage = ({ getQuestions, question: { questions, loading }  }) => {
+const HomePage = ({ getQuestions, question: { questions, loading } }) => {
     useEffect(() => {
         getQuestions();
-    }, [getQuestions ]);
+    }, [getQuestions]);
 
     return <Fragment>
         <div className='page'>
@@ -25,17 +25,17 @@ const HomePage = ({ getQuestions, question: { questions, loading }  }) => {
                         <h3 className='questions-headline'>Top Questions</h3>
                         <div className='questions-btn'>
                             <Link to='/add/question'>
-                                <button className = 's-btn btn__ primary'>Ask Question</button>
+                                <button className='s-btn btn__ primary button'>Ask Question</button>
                             </Link>
                         </div>
                     </div>
-                   
+
                     <div className='questions'>
                         {questions?.map(question => (
-                            <PostItem key={question?.id} question={question}/>))}
+                            <PostItem key={question?.id} question={question} />))}
                     </div>
                 </div>
-               
+
             </div>
             <YoutubeVideos />
         </div>
