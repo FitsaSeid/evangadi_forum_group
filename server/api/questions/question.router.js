@@ -7,10 +7,10 @@ const { addQuestion, getSingleQuestion, getAllQuestions, deletePost }  = require
 
 
 router.post('/', auth, [
-            check('title', 'Enter a question with minimum 15 characters').isLength({ min: 15 }),
-            check('body', 'Enter a description with minimum 30 characters').isLength({ min: 30 })
+            check('question', 'Enter a question with minimum 15 characters').isLength({ min: 15 }),
+            check('question_description', 'Enter a description with minimum 30 characters').isLength({ min: 30 })
 ], addQuestion )
-router.get('/:id', getSingleQuestion)
+router.get('/api/questions/:id', getSingleQuestion)
 router.get('/', getAllQuestions)
 router.delete('/:id', [auth, checkOwnership], deletePost);
 router.get('/top', getAllQuestions);

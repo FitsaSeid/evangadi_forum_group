@@ -5,7 +5,7 @@ import {
 
 const InitialState = [];
 
-export default function (state = InitialState, action) {
+export const alert = (state = InitialState, action) => {
     switch (action.type) {
         case SET_ALERT:
             return [...state, action.payload];

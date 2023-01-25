@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { addQuestion } from '../../redux/questions/questions.action';
 
-// import './QuestionForm.styles.scss';
+import './QuestionForm.styles.scss';
+import Youtube from '../../components/Youtube/Youtube';
 
 const PostForm = ({ auth: { isAuthenticated, loading }, addQuestion }) => {
 
@@ -37,8 +38,8 @@ const PostForm = ({ auth: { isAuthenticated, loading }, addQuestion }) => {
         <div className='post-form-container'>
             <div className='post-form-content'>
                 <div className='post-form-header'>
-                    <div className='post-form-headline fc-black-800'>
-                        Ask a Coding question
+                    <div className='post-form-headline title-desc fc-black-800'>
+                        Ask a question
                     </div>
                 </div>
                 <div className='post-form-section'>
@@ -49,8 +50,8 @@ const PostForm = ({ auth: { isAuthenticated, loading }, addQuestion }) => {
                                     <div className='title-grid'>
                                         <label className='form-label s-label'>
                                             Question
-                                            <p className='title-desc fw-normal fs-caption'>
-                                                Be specific and imagine you’re asking a question to another person
+                                            <p className='title-desc fs-caption fc-black-700'>
+                                                Ask your question here
                                             </p>
                                         </label>
                                         <input
@@ -60,11 +61,11 @@ const PostForm = ({ auth: { isAuthenticated, loading }, addQuestion }) => {
                                             value={question}
                                             onChange={e => onChange(e)}
                                             id='question'
-                                            placeholder='please write your question here!'
+                                            placeholder='Please write your question here!'
                                         />
                                     </div>
-                                    <div className='body-grid'>
-                                        <label className='form-label s-label fc-black-800'>
+                                    <div className='body-grid '>
+                                        <label className='form-label s-label fc-black-700'>
                                             Description
                                             <p className='body-desc fw-normal fs-caption fc-black-800'>Include all the information someone would
                                                 need to answer your question</p>
@@ -73,7 +74,7 @@ const PostForm = ({ auth: { isAuthenticated, loading }, addQuestion }) => {
                                             className='s-textarea'
                                             name='question_description'
                                             cols='30'
-                                            rows='12'
+                                            rows='9'
                                             value={question_description}
                                             onChange={e => onChange(e)}
                                             placeholder='Enter description with minimum 30 characters'
@@ -101,14 +102,15 @@ const PostForm = ({ auth: { isAuthenticated, loading }, addQuestion }) => {
                                 </div>
                             </div>
                             <div className='post-button mt32'>
-                                <button className='s-btn s-btn__primary' id='submit-button' name='submit-button'>Send your question</button>
+                                <button className='bn632-hover bn23 s-btnt s-btn__primary' id='submit-button' name='submit-button'>Send your question</button>
                             </div>
                         </form>
                     </div>
                     <aside>
                         <div className='right-panel'>
                             <div className='widget'>
-                                <div className='s-sidebarwidget--header'>
+                            <Youtube />
+                                {/* <div className='s-sidebarwidget--header'>
                                     Step 1: Draft your question
                                 </div>
                                 <div className='widget-content fc-black-800'>
@@ -175,7 +177,7 @@ const PostForm = ({ auth: { isAuthenticated, loading }, addQuestion }) => {
                                             </div>
                                         </li>
                                     </ol>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </aside>

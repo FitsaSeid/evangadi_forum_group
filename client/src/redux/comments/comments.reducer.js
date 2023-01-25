@@ -1,37 +1,37 @@
 import {
-    GET_ANSWERS,
-    ANSWER_ERROR,
-    ADD_ANSWER,
-    DELETE_ANSWER
-} from './answers.types';
+    GET_COMMENTS,
+    COMMENT_ERROR,
+    ADD_COMMENT,
+    DELETE_COMMENT
+} from './comments.types';
 
 const initialState = {
-    answers: [],
+    comments: [],
     loading: true,
     error: {}
 };
 
-export const answer = (state = initialState, action) => {
+export const comment =(state = initialState, action) => {
     switch (action.type){
-        case GET_ANSWERS:
+        case GET_COMMENTS:
             return{
                 ...state,
-                answers: action.payload,
+                comments: action.payload,
                 loading: false
             };
-        case ADD_ANSWER:
+        case ADD_COMMENT:
             return {
                 ...state,
-                answers: [  ...state.answers,action.payload ],
+                comments: [ action.payload , ...state.comments],
                 loading: false
             };
-        case DELETE_ANSWER:
+        case DELETE_COMMENT:
             return {
                 ...state,
-                answers: state.answers.filter(answer => answer.id !== action.payload),
+                comments: state.comments.filter(answer => answer.id !== action.payload),
                 loading: false
             };
-        case ANSWER_ERROR:
+        case COMMENT_ERROR:
             return {
                 ...state,
                 error: action.payload,

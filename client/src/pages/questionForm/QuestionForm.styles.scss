@@ -3,16 +3,16 @@ body {
 }
 
 .post-form-container {
-    width: 100%;
-    max-width: 100%;
-    display: flex;
-    justify-content: center;
-    margin: 0;
-    background-color: transparent;
-    position: relative;
-    flex: 1 0 auto;
-    color: #242729;
-    margin-top: 14px;
+    // width: 100%;
+    // max-width: 100%;
+    // display: flex;
+    // justify-content: center;
+    // margin: 0;
+    // // background-color: transparent;
+    // position: relative;
+    // flex: 1 0 auto;
+    // color: #242729;
+    // margin-top: 14px;
 
     .post-form-content {
         min-height: 750px;
@@ -27,9 +27,7 @@ body {
 
         .post-form-header {
             height: 130px;
-            background-image: url("https://cdn.sstatic.net/img/ask/background.svg?v=2e9a8205b368");
-            background-repeat: no-repeat;
-            background-position: right bottom !important;
+           
             padding-top: 24px !important;
             padding-bottom: 24px !important;
             display: flex;
@@ -86,7 +84,7 @@ body {
                     }
 
                     .question-layout {
-                        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 20px 48px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.1);
+                        // box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 20px 48px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.1);
                         padding: 16px !important;
                         background-color: #fff !important;
                         border-color: #d6d9dc !important;
@@ -203,7 +201,7 @@ body {
                         margin-bottom: 24px;
                         position: relative;
                         border-radius: 3px;
-                        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 20px 48px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.1);
+                        // box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 20px 48px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.1);
                         font-size: 13px;
                         background-color: #fff;
                         color: #242729;
@@ -221,7 +219,7 @@ body {
 
                         .widget-content {
                             display: block !important;
-                            background-color: #2d2d2d !important;
+                            // background-color: #2d2d2d !important;
                             padding: 16px 15px 0 15px;
                             border-top: 1px solid #404345;
                             color: #242729;

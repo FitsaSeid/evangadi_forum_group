@@ -18,7 +18,7 @@ app.use("/api/users", userRouter);
 app.use('/api/questions', QuestionRouter)
 app.use('/api/questions/answers', AnswerRouter)
 app.use('/api/auth', AuthRouter)
-app.use('/api/comments', CommentRouter)
+app.use('/api/questions/comments', CommentRouter)
 
 
 app.listen(port, () => console.log(`Listening at http://localhost:${port}`));

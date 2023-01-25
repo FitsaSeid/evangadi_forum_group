@@ -19,12 +19,13 @@ const Home = ({ getTopQuestions , question: {questions, loading}}) => {
 
     return loading || questions === null ? <Fragment>Loading...</Fragment> : <Fragment>
         <div className=''>
+  
             <div className="row">
                 <div className="col-lg-6 col-sm-12 about__user_section">
                     <h3>Welcome </h3>
-                    <Link to = '/questions'>
+                    {/* <Link to = '/questions'>
                     <button >Ask Question</button>
-                    </Link>
+                    </Link> */}
                     {/* <Sidebar
                         // user_name={userData.user?.display_name}
                         profile_picture=""
@@ -33,7 +34,7 @@ const Home = ({ getTopQuestions , question: {questions, loading}}) => {
                     /> */}
                 </div>
                 <div className="col-lg-6 col-sm-12 question__section">
-                        {questions.map(question => (
+                        {questions?.map(question => (
                             <Question key={question.id} question={question} />))} 
                         
                 </div>

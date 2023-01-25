@@ -4,20 +4,26 @@ const responseHandler = require('../helpers/helperFunction')
 
   const addQuestion= (req, res) =>{
       const errors = validationResult(req);
+    //   console.log(res)
       if (!errors.isEmpty()) {
           return res
               .status(400)
-              .json(helperFunction.responseHandler(false, 400, errors.array()[0].msg, null));
+              .json(responseHandler(false, 400, errors.array()[0].msg, null));
       }
      try{
        const question = new Question ( {
+        
            question : req.body.question,
            question_description : req.body.question_description,
            userId: req.user.id,
            tagname: req.body.tagname
        
     }   
+
+    
     )
+    console.log(question)
+
 
      // Save Post in the database
         Question.create(question, (err, data) => {

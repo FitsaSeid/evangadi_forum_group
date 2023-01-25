@@ -19,7 +19,7 @@ const initialState = {
     error: {}
 };
 
-export default function (state = initialState, action) {
+export const question = (state = initialState, action)=> {
     switch (action.type) {
         case GET_QUESTIONS:
         case GET_TOP_QUESTIONS:
@@ -38,7 +38,7 @@ export default function (state = initialState, action) {
         case ADD_QUESTION:
             return {
                 ...state,
-                questions: [action.payload, ...state.posts],
+                questions: [action.payload, ...state.questions],
                 loading: false
             };
         case DELETE_QUESTION:

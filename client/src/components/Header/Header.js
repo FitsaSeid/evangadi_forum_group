@@ -12,7 +12,7 @@ const Header = ({ auth: { isAuthenticated, loading }, logout}) => {
     const authLinks = (
         <div className='btns'>
             <Link onClick={logout} to='/login'>
-                <button type='button' className='s-btn s-btn__filled'>Log out</button>
+                <button type='button' className=' bn53'>Log out</button>
             </Link>
         </div>
     );
@@ -43,11 +43,11 @@ const Header = ({ auth: { isAuthenticated, loading }, logout}) => {
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
                     <div>
-                        <a class="navbar-brand" href="#"><img src='https://www.evangadi.com/themes/humans//assets/images/misc/evangadi-logo-home.png' alt="" /></a>
+                        <a class="navbar-brand" ><img src='https://www.evangadi.com/themes/humans//assets/images/misc/evangadi-logo-home.png' alt="" /></a>
                         {!loading && (
                             <Fragment>{isAuthenticated ? authTabs : guestTabs}</Fragment>
                         )}
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                     </div>

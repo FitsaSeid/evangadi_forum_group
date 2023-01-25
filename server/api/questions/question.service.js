@@ -7,13 +7,14 @@ const Question = function (question) {
     this.question = question.question;
     this.question_description = question.question_description;
     this.userId = question.userId;
+    this.tagname = question.tagname;
 
 }
 
 
 // create
 Question.create = (newQuestion, result)=>{
-    const query = `INSERT INTO questions(question,question_description,users) VALUES (?,?,?)
+    const query = `INSERT INTO questions(question,question_description,user_id) VALUES (?,?,?)
    `; 
     
     pool.query(query, [newQuestion.question, newQuestion.question_description, newQuestion.userId], (err, res) => {
@@ -79,7 +80,7 @@ Question.retrieveAll = ({ action, tagName }, result) => {
     let base = `SELECT 
                 questions.id,questions.user_id,user_name,COUNT(DISTINCT answers.id) 
                 as answer_count,COUNT(DISTINCT comments.id) 
-                as comment_count,tag_id,question,questions.question_description,tagname,questions.created_at 
+                as comment_count,tag_id,question,question_description,tagname,questions.created_at 
                 FROM questions 
 
                 JOIN posttag ON questions.id = question_id 
@@ -90,11 +91,35 @@ Question.retrieveAll = ({ action, tagName }, result) => {
                 LEFT JOIN comments ON questions.id = comments.question_id `;
 
         if (action === 'basic') {
-            query = 'GROUP BY questions.id ORDER BY questions.created_at DESC;';
-        } else if (action === 'top') {
-            query = 'GROUP BY questions.id ORDER BY answer_count DESC,comment_count DESC;';
-        } else if (action === 'tag') {
-            query = 'WHERE tags.tagname = ? GROUP BY questions.id ORDER BY questions.created_at DESC;';
+            // query = 'GROUP BY questions.id ORDER BY questions.created_at DESC;';
+            // query = `SELECT 
+            //    user_id, question,question_description FROM questions `
+
+            query = `SELECT * FROM (((((questions JOIN posttag ON question_id = questions.id )JOIN tags ON tag_id = tags.id )JOIN users ON user_id = users.id )  LEFT JOIN  answers ON answers.question_id = questions.id)LEFT JOIN comments ON questions.id = comments.question_id)`
+
+
+            // query = `SELECT * FROM (((((questions JOIN users ON questions.user_id = users.id ) JOIN  answers ON answers.user_id = users.id)JOIN posttag ON questions.id = question_id ) JOIN tags ON ON tag_id = tags.id )JOIN  comments ON questions.id = comments.question_id)`; 
+
+
+
+
+            // let allData = `SELECT * FROM ((Products INNER JOIN ProductDescription ON Products.product_id = ProductDescription.product_id) INNER JOIN  ProductPrice ON Products.product_id = ProductPrice.product_id)`; 
+
+
+            // query = `SELECT 
+            //     questions.id,questions.user_id,user_name,COUNT(DISTINCT answers.id) 
+            //     as answer_count,COUNT(DISTINCT comments.id) 
+            //     as comment_count,tag_id,question,questions.question_description,tagname,questions.created_at 
+            //     FROM questions 
+            //     JOIN posttag ON questions.id = question_id 
+            //     JOIN tags ON tag_id = tags.id 
+            //     JOIN users ON user_id = users.id 
+            //     LEFT JOIN answers ON answers.question_id = questions.id 
+            //     LEFT JOIN comments ON questions.id = comments.question_id `;
+        // } else if (action === 'top') {
+        //     query = 'GROUP BY questions.id ORDER BY answer_count DESC,comment_count DESC;';
+        // } else if (action === 'tag') {
+        //     query = 'WHERE tags.tagname = ? GROUP BY questions.id ORDER BY questions.created_at DESC;';
         } else {
         result(
             responseHandler(false, 400, 'Incorrect Action', null),
@@ -102,7 +127,7 @@ Question.retrieveAll = ({ action, tagName }, result) => {
         );
         return;
     }
-    pool.query(base + query,
+    pool.query( query,
         tagName ? tagName : null,
         (err, results) => {
             if (err || results.length === 0) {

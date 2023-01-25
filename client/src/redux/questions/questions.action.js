@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { setAlert } from '../alert/alert.actions';
+import  {setAlert}  from '../alert/alert.actions';
 import {
 GET_QUESTIONS,
 GET_QUESTION,
@@ -59,12 +59,12 @@ export const getTopQuestions = () => async dispatch => {
             payload: res.data.data
         });
     } catch (err) {
-        dispatch(setAlert(err.response.data.message, 'danger'));
+        // dispatch(setAlert(err.response.data.message, 'danger'));
 
-        dispatch({
-            type: QUESTION_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
-        });
+        // dispatch({
+        //     type: QUESTION_ERROR,
+        //     payload: { msg: err.response.statusText, status: err.response.status }
+        // });
     }
 };
 
