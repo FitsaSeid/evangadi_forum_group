@@ -78,7 +78,7 @@ Question.retrieveOne = (questionId, result) => {
 Question.retrieveAll = (err, result) => {
    
 
-    query = `SELECT question, question_description, questions.created_at  FROM ((questions JOIN users ON questions.user_id = users.id ) JOIN  answers ON answers.user_id = users.id) ORDER BY questions.created_at DESC`
+    query = `SELECT questions.id, question, question_description, questions.created_at  FROM ((questions JOIN users ON questions.user_id = users.id ) JOIN  answers ON answers.user_id = users.id) ORDER BY questions.created_at DESC`
     pool.query(query,
         (err, results) => {
             if (err || results.length === 0) {

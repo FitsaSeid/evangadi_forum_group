@@ -4,7 +4,7 @@ const responseHandler = require('../helpers/helperFunction')
 
 //constractor
 const Answer = function (answer) {
-    this.answer = answer.answer;
+    this.answer = answer.body;
     this.user_id = answer.user_id;
     this.question_id = answer.question_id;
 };

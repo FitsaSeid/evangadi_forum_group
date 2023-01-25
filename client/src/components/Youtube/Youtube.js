@@ -1,67 +1,52 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Card, Container } from "react-bootstrap";
+import './youtube.css'
 
-// https://www.googleapis.com/youtube/v3/search?key=AIzaSyB4xNW_TeLDTO9tKxmHQAZskoy9Na0sxR0&channelId=UCE_M8A5yxnLfW0KghEeajjw&part=snippet,id&order=date&maxResults=1
-
-
-const Youtube = () => {
-  const [youTubeVideos, setYouTubeVideos] = useState([])
-
+function YoutubeVideos() {
+  const [youtube, setYoutube] = useState([]);
   useEffect(() => {
-fetch(
-    "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBv_MveWxmNKF-fAAEDIy3qAIWtt0-YM1M&channelId=UCE_M8A5yxnLfW0KghEeajjw&part=snippet,id&order=date&maxResults=6"
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      const youTubeVideos = data.items;
-      setYouTubeVideos({ youTubeVideos });
-    });
+    fetch("https://www.googleapis.com/youtube/v3/search?key=AIzaSyCbWURpsxsgzfoI4NWDxJggP3ZDLRAsX7U&channelId=UCxA7AzkI2Sndf8S1G5rSkwQ&part=snippet,id&order=viewcount&maxResults=3")
+      .then((response) => response.json())
+      .then((data) => {
+        const youtube = data.items;
+        // console.log(youtube);
+        setYoutube(youtube)
+      })
 
-  },[])
-
-  console.log(youTubeVideos)
+  }, [])
+  console.log(youtube);
 
   return (
-    <div className="allVideosWrapper">
-    
-      {/* <div className="container">
-        <div className="row h-100 align-items-center justify-content-center text-center">
-          <div className="col-12">
-            <div className="title-wraper bold video-title-wrapper">
-              Latest Videos
-            </div> */}
-          {/* </div> */}
-          {/* {youTubeVideos?.map((singleVideo, i) => {
-            let vidId = singleVideo.id.videoId;
-            let vidLink = `https://www.youtube.com/watch?v=${vidId}`;
-            let videoWrapper = (
-              <div key={i} className="col-12">
-                <div className="singleVideoWrapper">
-                  <div className="videoThumbnail">
-                    <a href={vidLink} target="_blank">
-                      <img src={singleVideo.snippet.thumbnails.high.url} />
-                    </a>
-                  </div>
-                  <div className="videoInfoWrapper">
-                    <div className="videoTitle">
-                      <a href={vidLink} target="_blank">
-                        {singleVideo.snippet.title}
-                      </a>
-                    </div>
-                    <div className="videoDesc">
-                      {singleVideo.snippet.description}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-            return videoWrapper;
-          })}
+    <Container>
+      <div>
+        <h4 className='text-center'> Evangadi videos </h4>
 
-          {this.videoWrapper} */}
-        </div>
-    //   </div>
-    // </div>
-  );
+      </div>
+      <Row>
+        {youtube?.map((singelvideo, index) => {
+          let vid = singelvideo.id.videoId
+          let videoLink = `https://www.youtube.com/watch?v=${vid}`
+          return (
+            <Col sm={12} md={12} className="mb-3">
+              <Card key={index} style={{ height: "30rem" }} >
+                <a href={videoLink}>
+                  <img src={singelvideo.snippet.thumbnails.high.url} alt="" />
+                </a>
+                <Card.Body>
+                  <Card.Title>{singelvideo.snippet.title}</Card.Title>
+                  <Card.Text>{singelvideo.snippet.description}</Card.Text>
+                  <Card.Subtitle>{singelvideo.snippet.publishedAt}</Card.Subtitle>
+                </Card.Body>
+              </Card>
+            </Col>
+          )
+        })}
+        <Col>
+        </Col>
+      </Row>
+    </Container>
+
+  )
 }
 
-export default Youtube
+export default YoutubeVideos

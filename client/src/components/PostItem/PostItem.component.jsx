@@ -6,34 +6,18 @@ import { Link } from 'react-router-dom';
 
 import './PostItem.styles.scss';
 
-const PostItem = ({ question: { id, question, question_description, tagname, username, user_id, answer_count, comment_count, created_at } }) => {
-    const answerVoteUp = (
-        <div className='vote answer'>
-            <span className='vote-count fc-green-500'>{answer_count}</span>
-            <div className='count-text'>answers</div>
-        </div>
-    )
-
-    const answerVoteDown = (
-        <div className='vote'>
-            <span className='vote-count'>{answer_count}</span>
-            <div className='count-text'>answers</div>
-        </div>
-    )
-
+const PostItem = ({ question: { id, question, question_description, tagname, username, user_id, comment_count, created_at } }) => {
     return (
         <div className='posts'>
             <div className='stats-container fc-black-500'>
                 <div className='stats'>
                     <div className='vote'>
-                        <span className='vote-count'>{comment_count}</span>
-                        <div className='count-text'>comments</div>
+                        <div className='count-text'>Question</div>
                     </div>
-                    {answer_count > 0 ? answerVoteUp : answerVoteDown}
                     <div className='vote'>
-                        <span className='vote-count'>{tagname ? 1 : 0}</span>
-                        <div className='count-text'>tags</div>
+                        <div className='count-text'>Description </div>
                     </div>
+
                 </div>
             </div>
             <div className='summary'>
@@ -50,10 +34,10 @@ const PostItem = ({ question: { id, question, question_description, tagname, use
                 </div>
                 <div className='question-user'>
                     <div className='user-info'>
-                        <div className='user-action-time'>asked { moment(created_at).fromNow(true) } ago</div>
+                        <div className='user-action-time'>asked {moment(created_at).fromNow(true)} ago</div>
                         <div className='user-gravatar'>
                             <Link to={`/users/${user_id}`}>
-                                
+
                             </Link>
                         </div>
                         <div className='user-details'>

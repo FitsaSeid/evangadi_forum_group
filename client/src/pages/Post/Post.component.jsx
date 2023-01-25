@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useState } from 'react';
+import React, {useEffect, Fragment,useState} from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -22,9 +22,9 @@ const Post = ({ deleteQuestion, deleteAnswer, addAnswer, deleteComment, addComme
         getAnswers(match.params.id);
         getComments(match.params.id);
         // eslint-disable-next-line
-    }, [getQuestion, getAnswers, getComments]);
+    }, [ getQuestion, getAnswers, getComments ]);
 
-    const [formData, setFormData] = useState({
+    const [ formData, setFormData ] = useState({
         body: ''
     });
 
@@ -34,13 +34,13 @@ const Post = ({ deleteQuestion, deleteAnswer, addAnswer, deleteComment, addComme
 
     const onSubmit = async e => {
         e.preventDefault();
-        addComment(match.params.id, { body });
+        addComment(match.params.id, {body});
         setFormData({
             body: ''
         });
     };
 
-    const [formDataAnswer, setFormDataAnswer] = useState({
+    const [ formDataAnswer, setFormDataAnswer ] = useState({
         text: ''
     });
 
@@ -50,7 +50,7 @@ const Post = ({ deleteQuestion, deleteAnswer, addAnswer, deleteComment, addComme
 
     const onSubmitAnswer = async e => {
         e.preventDefault();
-        addAnswer(match.params.id, { text });
+        addAnswer(match.params.id,{text});
         setFormDataAnswer({
             text: ''
         });
@@ -58,7 +58,7 @@ const Post = ({ deleteQuestion, deleteAnswer, addAnswer, deleteComment, addComme
 
     return loading || question === null ? <Fragment>Loading...</Fragment> : <Fragment>
         <div className='page'>
-            <SideBar />
+            <SideBar/>
             <div id="content">
                 <div id='mainbar' className='post'>
                     <div className='question-header fc-black-800 pl24'>
@@ -71,11 +71,11 @@ const Post = ({ deleteQuestion, deleteAnswer, addAnswer, deleteComment, addComme
                     </div>
                     <div className='question-date fc-black-800 pl24'>
                         <div className='grid-cell'>
-                            <span className='fc-light'>
-                                Asked
-                            </span>
-                            <time dateTime={moment(question.created_at).fromNow(true)}>
-                                {moment(question.created_at).fromNow(true)} ago
+                                <span className='fc-light'>
+                                    Asked
+                                </span>
+                            <time dateTime={ moment(question.created_at).fromNow(true) }>
+                                { moment(question.created_at).fromNow(true) } ago
                             </time>
                         </div>
                     </div>
@@ -120,7 +120,7 @@ const Post = ({ deleteQuestion, deleteAnswer, addAnswer, deleteComment, addComme
                                                     {!auth.loading && auth.isAuthenticated && parseInt(question.user_id) === auth.user.id && (
                                                         <Link
                                                             className='s-link s-link__danger'
-                                                            style={{ paddingLeft: '4px' }}
+                                                            style={{paddingLeft: '4px'}}
                                                             question='Delete the question'
                                                             onClick={e => deleteQuestion(question.id)}
                                                             to='/questions'
@@ -132,11 +132,11 @@ const Post = ({ deleteQuestion, deleteAnswer, addAnswer, deleteComment, addComme
                                             </div>
                                             <div className='post-owner'>
                                                 <div className='user-block fc-black-500'>
-                                                    <div className='action-time'>asked {moment(question.created_at).fromNow(true)} ago</div>
+                                                    <div className='action-time'>asked { moment(question.created_at).fromNow(true) } ago</div>
                                                     <div className='user-logo'>
                                                         <Link className='user-link' to={`/users/${question.user_id}`}>
                                                             <div className='logo-wrapper'>
-                                                                <img alt='user_logo' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAASFBMVEXw8PB3xdTX5en69PL08vGTzNhyw9Ntw9Kd0NvT4+d5xtRvwtPa5+pxxNP08vCPy9jq7u5jwNG/3OOm0tz+9vSFyNa72+Ku1d7kOy6EAAADxElEQVR4nO2djXKiQBCE/YFdZUFOo3fv/6ZHBD1RU/ZeDUu7didUIGWG+bZnQCvrulhIkiRJkiRJkiRJ0qeqgESZ1Q4K9WuFqE6MaJhVsQqueaXlvl1PDhWflYeyKlZu+Vq+TE1ol9U7E4bsCVEPG0pCu6w+wUMRvj+h+nAeQnkYQ5i/hyIU4RQSoQinimUnEcYR6o4/D6GqVIS3sdSH8xDKwxjC/D0UoQinkG0fcl5p8vdQhCK8jcXZh4nv+FVD6SH6H1LfK4RuO3+fd/u9bjd0O2FfHq/zH7C5G1HaPRzWfTKhTyAMKfrr4XnDZhcUdVsCOm3SqjwBSbVf0AyRYg3ouNm/nhvxk0L0X3jn6yOSFwKIqdggfWGoZpt4Ak+x8UkBK5eeMCQlXM5AiNyf7CQPpyBM62H+hKrSKQjz91B9aCv14RSE+VepPLSV+nAKQnlorOw9nOM1vjy0lZ6XTkGoKhVhnPLvQ93xpyDMvw/loa3Uh1MQykNjzUCY9v+HHaFl9og2rqq64um+q5s8qqe7r1SdH3yJNfwcH1bd68PRBIbn8yMMV42oS+9eC+zVJ394v9v4Q228aoQbvr73mn+/uBz6U719rQPE10KhHtmHwz6l82a7asTxaZmMVScPlXheG2coyxlktISGaZkN1o6VkDEUaVq2HqoPI9JiHCzSgae9W5B6yJiWqpSaEJp+TluljAVPWloiFOE4FmPz0HrIOFikAy/COELG0iJ9Pz7nYJGWFm2VMoYiLS3aPmQMRZqW+jCOkHHgVaUiHMfS3WKOtFSlIhzHYiwt9eFshIyhaD3Uq6cYQsbSoq1SxlCkadESMrY06cCLMI6QsbTk4WyEjOVAOvCf0Iekz9oYB4u0tGirlDEUaWnR9iFjKNK01IdxhIwDryoVIX9an3ClIfWQcbBoCfP3UH0YQ5i/hyKch1DX0hhCLC3oTfT9ihD917AWxMOh43w/ftMCizjUh/slEJ7Jn6BQQFKmhEt3XUziusBEv3LDzaFzv4H1IFalH0K5m+3+EMnJlhBSs0U+osVuIRjLPoSELQxkuFxRcg9pCe08hJZVlYcREuHnEKoPYdF6KEJcIKHZ8n20hG98pcneQ/Xh+xPSeqhXT7BoCfWsDRath7qWwqL1UNdSWPkTqg9FGC1daS6E6kNY+XtIS6g+hEVLKA9xgYRmJ4QWe+0IfafQb+H753/L7THCfdM/fjhb8E9PHH7cvW576NMfFnVbWqmtkSH9Y3bC9gv6MJpibafkJ0TOJ0mSJEmSJEmSJEk56i+zk7G+y6HSlQAAAABJRU5ErkJggg==' />
+                                                                <img alt='user_logo' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAASFBMVEXw8PB3xdTX5en69PL08vGTzNhyw9Ntw9Kd0NvT4+d5xtRvwtPa5+pxxNP08vCPy9jq7u5jwNG/3OOm0tz+9vSFyNa72+Ku1d7kOy6EAAADxElEQVR4nO2djXKiQBCE/YFdZUFOo3fv/6ZHBD1RU/ZeDUu7didUIGWG+bZnQCvrulhIkiRJkiRJkiRJ0qeqgESZ1Q4K9WuFqE6MaJhVsQqueaXlvl1PDhWflYeyKlZu+Vq+TE1ol9U7E4bsCVEPG0pCu6w+wUMRvj+h+nAeQnkYQ5i/hyIU4RQSoQinimUnEcYR6o4/D6GqVIS3sdSH8xDKwxjC/D0UoQinkG0fcl5p8vdQhCK8jcXZh4nv+FVD6SH6H1LfK4RuO3+fd/u9bjd0O2FfHq/zH7C5G1HaPRzWfTKhTyAMKfrr4XnDZhcUdVsCOm3SqjwBSbVf0AyRYg3ouNm/nhvxk0L0X3jn6yOSFwKIqdggfWGoZpt4Ak+x8UkBK5eeMCQlXM5AiNyf7CQPpyBM62H+hKrSKQjz91B9aCv14RSE+VepPLSV+nAKQnlorOw9nOM1vjy0lZ6XTkGoKhVhnPLvQ93xpyDMvw/loa3Uh1MQykNjzUCY9v+HHaFl9og2rqq64um+q5s8qqe7r1SdH3yJNfwcH1bd68PRBIbn8yMMV42oS+9eC+zVJ394v9v4Q228aoQbvr73mn+/uBz6U719rQPE10KhHtmHwz6l82a7asTxaZmMVScPlXheG2coyxlktISGaZkN1o6VkDEUaVq2HqoPI9JiHCzSgae9W5B6yJiWqpSaEJp+TluljAVPWloiFOE4FmPz0HrIOFikAy/COELG0iJ9Pz7nYJGWFm2VMoYiLS3aPmQMRZqW+jCOkHHgVaUiHMfS3WKOtFSlIhzHYiwt9eFshIyhaD3Uq6cYQsbSoq1SxlCkadESMrY06cCLMI6QsbTk4WyEjOVAOvCf0Iekz9oYB4u0tGirlDEUaWnR9iFjKNK01IdxhIwDryoVIX9an3ClIfWQcbBoCfP3UH0YQ5i/hyKch1DX0hhCLC3oTfT9ihD917AWxMOh43w/ftMCizjUh/slEJ7Jn6BQQFKmhEt3XUziusBEv3LDzaFzv4H1IFalH0K5m+3+EMnJlhBSs0U+osVuIRjLPoSELQxkuFxRcg9pCe08hJZVlYcREuHnEKoPYdF6KEJcIKHZ8n20hG98pcneQ/Xh+xPSeqhXT7BoCfWsDRath7qWwqL1UNdSWPkTqg9FGC1daS6E6kNY+XtIS6g+hEVLKA9xgYRmJ4QWe+0IfafQb+H753/L7THCfdM/fjhb8E9PHH7cvW576NMfFnVbWqmtkSH9Y3bC9gv6MJpibafkJ0TOJ0mSJEmSJEmSJEk56i+zk7G+y6HSlQAAAABJRU5ErkJggg=='/>
                                                             </div>
                                                         </Link>
                                                     </div>
@@ -155,23 +155,23 @@ const Post = ({ deleteQuestion, deleteAnswer, addAnswer, deleteComment, addComme
                                                 <li className='comments-item' key={comment.id} >
                                                     <div className='comment-text fc-black-800'>
                                                         <div className='comment-body'>
-                                                            <span className='body'>
+                                                                <span className='body'>
                                                                 {comment.comment}
-                                                            </span>
+                                                                </span>
                                                             &nbsp;&ndash;&nbsp;
                                                             <Link className='s-tag' to={`/users/${comment.user_id}`}>
                                                                 {comment.username}
                                                             </Link>
-                                                            <span title={moment(comment.created_at).fromNow(true)}
-                                                                style={{ color: '#959ca3 !important' }}
-                                                                className='date fs-body1'>
-                                                                {moment(comment.created_at).fromNow(true)} ago
+                                                            <span title={ moment(comment.created_at).fromNow(true) }
+                                                                  style={{color: '#959ca3 !important'}}
+                                                                  className='date fs-body1'>
+                                                                { moment(comment.created_at).fromNow(true) } ago
                                                             </span>
                                                         </div>
                                                         {!auth.loading && auth.isAuthenticated && parseInt(comment.user_id) === auth.user.id && (
                                                             <Link
                                                                 className='s-tag s-tag__moderator'
-                                                                style={{ marginTop: '4px' }}
+                                                                style={{marginTop: '4px'}}
                                                                 title='Delete the comment'
                                                                 onClick={e => deleteComment(comment.id)}
                                                                 to={`/questions/${question.id}`}
@@ -219,21 +219,21 @@ const Post = ({ deleteQuestion, deleteAnswer, addAnswer, deleteComment, addComme
                                     <div className="grid--cell">
                                         <div className=" grid s-btn-group js-filter-btn">
                                             <Link className="s-btn s-btn__filled is-selected"
-                                                to="#"
-                                                data-nav-xhref="" title="Answers with the latest activity first"
-                                                data-value="active" data-shortcut="A">
+                                               to="#"
+                                               data-nav-xhref="" title="Answers with the latest activity first"
+                                               data-value="active" data-shortcut="A">
                                                 Active
                                             </Link>
                                             <Link className="s-btn s-btn__filled"
-                                                to="#"
-                                                data-nav-xhref="" title="Answers in the order they were provided"
-                                                data-value="oldest" data-shortcut="O">
+                                               to="#"
+                                               data-nav-xhref="" title="Answers in the order they were provided"
+                                               data-value="oldest" data-shortcut="O">
                                                 Oldest
                                             </Link>
                                             <Link className="s-btn s-btn__filled"
-                                                to="#"
-                                                data-nav-xhref="" title="Answers with the highest score first"
-                                                data-value="votes" data-shortcut="V">
+                                               to="#"
+                                               data-nav-xhref="" title="Answers with the highest score first"
+                                               data-value="votes" data-shortcut="V">
                                                 Votes
                                             </Link>
                                         </div>
@@ -249,21 +249,21 @@ const Post = ({ deleteQuestion, deleteAnswer, addAnswer, deleteComment, addComme
                                                     className='vote-up'
                                                     title='This answer is useful (click again to undo)'
                                                 >
-                                                    <UpVote className='icon' />
+                                                    <UpVote className='icon'/>
                                                 </button>
                                                 <div className='vote-count fc-black-500'>0</div>
                                                 <button
                                                     className='vote-down'
                                                     title='This answer is not useful (click again to undo)'
                                                 >
-                                                    <DownVote className='icon' />
+                                                    <DownVote className='icon'/>
                                                 </button>
                                             </div>
                                         </div>
                                         <div className='answer-item'>
                                             <div className='answer-content fc-black-800'>
                                                 <p>
-                                                    {answer.answer}
+                                                    {answer.body}
                                                 </p>
                                             </div>
                                             <div className='answer-actions'>
@@ -278,8 +278,8 @@ const Post = ({ deleteQuestion, deleteAnswer, addAnswer, deleteComment, addComme
                                                         {!auth.loading && auth.isAuthenticated && parseInt(answer.user_id) === auth.user.id && (
                                                             <Link
                                                                 className='s-link s-link__danger'
-                                                                style={{ paddingLeft: '4px' }}
-                                                                answer='Delete the answer'
+                                                                style={{paddingLeft: '4px'}}
+                                                                title='Delete the answer'
                                                                 onClick={e => deleteAnswer(answer.id)}
                                                                 to={`/questions/${question.id}`}
                                                             >
@@ -292,12 +292,12 @@ const Post = ({ deleteQuestion, deleteAnswer, addAnswer, deleteComment, addComme
                                                     <div className='answer-user'>
                                                         <div className='answer-user-time fc-black-500'>
                                                             answered&nbsp;
-                                                            <span>{moment(answer.created_at).fromNow(true)} ago</span>
+                                                            <span>{ moment(answer.created_at).fromNow(true) } ago</span>
                                                         </div>
                                                         <div className='answer-logo'>
                                                             <Link className='answer-user-link' to={`/users/${answer.user_id}`}>
                                                                 <div className='answer-logo-wrapper'>
-                                                                    <img alt='user_logo' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAARVBMVEXw8PDZbnzx9vbr2dvYZHTZa3rdiZTq1Nbej5nw8vHXYXHdh5Lcg47YaHfs3d7z/PvWWmvgnqbv6+zbeobnwcXac4Dip66dwP2nAAACXUlEQVR4nO3dUVLCQBRE0ZghgSQQMKD7X6pLsKeqG1+V9y6gMwf0L47DQERERERERPRPW4yVfOByNF+H8sDd97xdIS7tcXL1OAtPHOfV9bz1OkrC04erkyS8TK7nTTNChL0hRNgbQoT9IUTYG0KE/SFE2BtChP0hRNgbQoT9IUTYG0KE/SFE2BtChP0hrC2chNY2/t79clO23i78moWu20XoKU0pRKdwmu/C17Ovwpdz06a0UzmFwlbNqaLHQoiw/rEQIqx/LIQI6x8LIcL6x0KIsP6xECKsfyyECOsfCyHC+sdCiLD+sRAirH8shAjrH6usULmeQboIoahwOM5KTXjppqpQvLbkzaeyCm0hRJja8oUQYWrLF0KEqS1fCBGmtnwhRJja8oUQYWrLF0KEqS1fCBGmtnwhRJja8oUQYWrLF0KEqS1fXqHvmoBR+o8aypB4ecEmCfercovDU7kPYlZeQhi/lalNOdX2qb1doHyk2nUdq3a3iTTVpB8aBailXblivL1FmnKGEGFmyhlChJkpZwgRZqacIUSYmXKGEGFmyhlChJkpZwgRZqacIUSYmXKGEGFmyhlChJkpZwgRZqbEpD+h/wPhaPrT/mE5mtC+rcKFEA9JOCtT60s6lnZ7gXaZRVMuhDikBypLL+ljUK7YkN/Nubt+aKRfi5F3ohCGtnwhRJja8oUQYWrLF0KEqS1fCBGmtnwhRJja8oUQYWrLF0KEqS1fCBGmtnwhRJja8oUQYWrLF8I+oe9+Bl/OU2m3Roj3M9iynkq6NcJ5P4NUzVMRERERERERlekH6WecNo06EQoAAAAASUVORK5CYII=' />
+                                                                    <img alt='user_logo' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAARVBMVEXw8PDZbnzx9vbr2dvYZHTZa3rdiZTq1Nbej5nw8vHXYXHdh5Lcg47YaHfs3d7z/PvWWmvgnqbv6+zbeobnwcXac4Dip66dwP2nAAACXUlEQVR4nO3dUVLCQBRE0ZghgSQQMKD7X6pLsKeqG1+V9y6gMwf0L47DQERERERERPRPW4yVfOByNF+H8sDd97xdIS7tcXL1OAtPHOfV9bz1OkrC04erkyS8TK7nTTNChL0hRNgbQoT9IUTYG0KE/SFE2BtChP0hRNgbQoT9IUTYG0KE/SFE2BtChP0hrC2chNY2/t79clO23i78moWu20XoKU0pRKdwmu/C17Ovwpdz06a0UzmFwlbNqaLHQoiw/rEQIqx/LIQI6x8LIcL6x0KIsP6xECKsfyyECOsfCyHC+sdCiLD+sRAirH8shAjrH6usULmeQboIoahwOM5KTXjppqpQvLbkzaeyCm0hRJja8oUQYWrLF0KEqS1fCBGmtnwhRJja8oUQYWrLF0KEqS1fCBGmtnwhRJja8oUQYWrLF0KEqS1fXqHvmoBR+o8aypB4ecEmCfercovDU7kPYlZeQhi/lalNOdX2qb1doHyk2nUdq3a3iTTVpB8aBailXblivL1FmnKGEGFmyhlChJkpZwgRZqacIUSYmXKGEGFmyhlChJkpZwgRZqacIUSYmXKGEGFmyhlChJkpZwgRZqbEpD+h/wPhaPrT/mE5mtC+rcKFEA9JOCtT60s6lnZ7gXaZRVMuhDikBypLL+ljUK7YkN/Nubt+aKRfi5F3ohCGtnwhRJja8oUQYWrLF0KEqS1fCBGmtnwhRJja8oUQYWrLF0KEqS1fCBGmtnwhRJja8oUQYWrLF8I+oe9+Bl/OU2m3Roj3M9iynkq6NcJ5P4NUzVMRERERERERlekH6WecNo06EQoAAAAASUVORK5CYII='/>
                                                                 </div>
                                                             </Link>
                                                         </div>
@@ -335,14 +335,14 @@ const Post = ({ deleteQuestion, deleteAnswer, addAnswer, deleteComment, addComme
                                     </form>
                                 </Fragment> : <Fragment>
                                     <Link to='/login'>
-                                        <button type='button' style={{ marginTop: '12px' }} className="s-btn s-btn__outlined">You need to login to add an answer</button>
+                                        <button type='button' style={{marginTop: '12px'}} className="s-btn s-btn__outlined">You need to login to add an answer</button>
                                     </Link>
                                 </Fragment>}
                             </div>
                         </div>
                     </div>
                 </div>
-                <RightSideBar />
+                <RightSideBar/>
             </div>
         </div>
     </Fragment>
@@ -370,4 +370,4 @@ const mapStateToProps = state => ({
     comment: state.comment
 });
 
-export default connect(mapStateToProps, { getQuestion, deleteQuestion, deleteAnswer, deleteComment, getAnswers, addAnswer, getComments, addComment })(Post);
+export default connect(mapStateToProps, { getQuestion, deleteQuestion, deleteAnswer, deleteComment, getAnswers,addAnswer, getComments, addComment })(Post);

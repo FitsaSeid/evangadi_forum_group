@@ -9,6 +9,7 @@ import PostItem from '../../components/PostItem/PostItem.component';
 // import RightSideBar from '../../components/right-sideBar/right-sideBar.component';
 
 import './HomePage.styles.scss';
+import YoutubeVideos from '../../components/Youtube/Youtube';
 
 const HomePage = ({ getQuestions, question: { questions, loading }  }) => {
     useEffect(() => {
@@ -34,8 +35,9 @@ const HomePage = ({ getQuestions, question: { questions, loading }  }) => {
                             <PostItem key={question?.id} question={question}/>))}
                     </div>
                 </div>
-                {/* <RightSideBar/> */}
+               
             </div>
+            <YoutubeVideos />
         </div>
     </Fragment>
 };
